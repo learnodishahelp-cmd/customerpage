@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Customer Manager</title>
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            /* Green Glassmorphism Background */
+            background: linear-gradient(135deg, #dcfce7, #86efac, #34d399);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Blurred colorful background blobs */
+        body::before, body::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            z-index: -1;
+            filter: blur(80px);
+            opacity: 0.5;
+        }
+        body::before {
+            width: 300px;
+            height: 300px;
+            background: #a7f3d0;
+            top: -50px;
+            left: -50px;
+        }
+        body::after {
+            width: 400px;
+            height: 400px;
+            background: #fbbf24;
+            bottom: -100px;
+            right: -100px;
+        }
+
+        /* --- Toast Notification --- */
+        .toast {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-30px);
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 14px 28px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            font-weight: 600;
+            font-size: 15px;
+            color: #14532d; /* Dark Green */
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 1000;
+            pointer-events: none;
+            text-align: center;
+            min-width: 200px;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0px);
+            pointer-events: auto;
+        }
+        .toast.error {
+            color: #991b1b; /* Dark Red */
+            border-color: #fca5a5;
+        }
+
+        /* --- Page Navigation --- */
+        .page {
+            display: none;
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Shared Header --- */
+        .app-header {
+            display: flex;
+            align-items: center;
+            padding: 10px 0 20px 0;
+            color: #0f172a;
+        }
+
+        .app-header i.fa-arrow-left {
+            font-size: 20px;
+            margin-right: 20px;
+            cursor: pointer;
+            padding: 8px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            transition: 0.2s;
+        }
+
+        .app-header i.fa-arrow-left:hover {
+            background: rgba(255,255,255,0.6);
+        }
+
+        .app-header h1 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        /* ==================== LIST PAGE ==================== */
+        .search-action-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .search-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            padding: 0 16px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        }
+
+        .search-wrapper i {
+            color: #475569;
+            margin-right: 12px;
+        }
+
+        .search-wrapper input {
+            width: 100%;
+            padding: 14px 0;
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            outline: none;
+            color: #1e293b;
+        }
+
+        .search-wrapper input::placeholder { color: #64748b; }
+
+        .add-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: #f97316;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
+            transition: all 0.2s ease;
+        }
+        .add-btn:hover { transform: scale(1.05); background: #ea580c; }
+
+        .customer-count {
+            font-size: 13px;
+            color: #475569;
+            margin-left: 4px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        #customer-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(12px);
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+            background: rgba(255, 255, 255, 0.45);
+        }
+
+        .card:active { transform: scale(0.98); }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 18px;
+            color: #166534;
+            flex-shrink: 0;
+            margin-right: 16px;
+        }
+
+        .details { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+        .details .name { font-weight: 600; font-size: 16px; color: #1e293b; }
+        .details .contact-info { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #475569; }
+        .details .contact-info i { width: 14px; font-size: 13px; color: #64748b; }
+        .menu { color: #64748b; font-size: 20px; padding: 4px 8px; cursor: pointer; }
+
+        /* ==================== FORM PAGE ==================== */
+        .form-wrapper {
+            background: rgba(255, 255, 255, 0.30);
+            backdrop-filter: blur(12px);
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            margin-top: 10px;
+        }
+
+        .profile-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            margin: 0 auto 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #166534;
+            font-size: 32px;
+        }
+
+        .form-group { margin-bottom: 18px; }
+        
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: #14532d;
+            margin-bottom: 6px;
+        }
+
+        .input-wrapper {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.45);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            border-radius: 12px;
+            padding: 12px 16px;
+            transition: 0.2s;
+        }
+
+        .input-wrapper:focus-within {
+            background: rgba(255, 255, 255, 0.7);
+            border-color: #22c55e;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+        }
+
+        .input-wrapper i {
+            color: #166534;
+            font-size: 18px;
+            margin-right: 14px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .input-wrapper input, .input-wrapper textarea {
+            width: 100%;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 15px;
+            color: #1e293b;
+        }
+
+        .input-wrapper textarea {
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 12px;
+            background: linear-gradient(to right, #16a34a, #22c55e);
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);
+            transition: 0.2s;
+        }
+        
+        .submit-btn:hover { transform: scale(1.02); }
+        .submit-btn:active { transform: scale(0.98); }
+
+        @media (max-width: 480px) { body { padding: 12px; } }
+    </style>
+</head>
+<body>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast">Action Successful</div>
+
+    <!-- ==================== PAGE 1: CUSTOMER LIST ==================== -->
+    <div id="list-page" class="page active">
+        <header class="app-header">
+            <i class="fas fa-arrow-left" style="visibility: hidden;"></i>
+            <h1>Customers</h1>
+        </header>
+
+        <div class="search-action-container">
+            <div class="search-wrapper">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-input" placeholder="Search customers...">
+            </div>
+            <button class="add-btn" id="add-btn">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
+
+        <div class="customer-count" id="customer-count">0 customers</div>
+        <ul id="customer-list"></ul>
+    </div>
+
+    <!-- ==================== PAGE 2: ADD/EDIT CUSTOMER ==================== -->
+    <div id="form-page" class="page">
+        <header class="app-header">
+            <i class="fas fa-arrow-left" id="back-btn"></i>
+            <h1>Add/Edit Customer</h1>
+        </header>
+
+        <div class="form-wrapper">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+
+            <form id="customer-form" novalidate>
+                <!-- Name Field (Mandatory) -->
+                <div class="form-group">
+                    <label>Customer Name</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" id="cust-name" placeholder="Enter customer name" required>
+                    </div>
+                </div>
+
+                <!-- Phone Field (Mandatory, 10 Digits) -->
+                <div class="form-group">
+                    <label>Phone Number</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-phone-alt"></i>
+                        <input type="tel" id="cust-phone" placeholder="Enter 10 digit mobile number" 
+                               required pattern="[0-9]{10}" maxlength="10" inputmode="numeric">
+                    </div>
+                </div>
+
+                <!-- Address Field (Optional) -->
+                <div class="form-group">
+                    <label>Address (Optional)</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <textarea id="cust-address" placeholder="Enter customer address"></textarea>
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fas fa-check"></i> Update
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // --- Data & DOM Elements ---
+        let customers = [
+            { name: 'David Lee', phone: 'DEMO-555-0105', email: 'david@example.com', address: '' },
+            { name: 'Emily Brown', phone: 'DEMO-555-0104', email: 'emily@example.com', address: '' },
+            { name: 'John Smith', phone: 'DEMO-555-0101', email: 'john@example.com', address: '' },
+            { name: 'Lisa Chen', phone: 'DEMO-555-0106', email: 'lisa@example.com', address: '' },
+            { name: 'Mike Wilson', phone: 'DEMO-555-0103', email: 'mike@example.com', address: '' },
+            { name: 'Sarah Johnson', phone: 'DEMO-555-0102', email: 'sarah@example.com', address: '' },
+            { name: 'Tom Clark', phone: 'DEMO-555-0107', email: 'tom@example.com', address: '' },
+            { name: 'Anna Taylor', phone: 'DEMO-555-0108', email: 'anna@example.com', address: '' }
+        ];
+
+        const listContainer = document.getElementById('customer-list');
+        const searchInput = document.getElementById('search-input');
+        const countDisplay = document.getElementById('customer-count');
+        
+        // Page Elements
+        const listPage = document.getElementById('list-page');
+        const formPage = document.getElementById('form-page');
+        const addBtn = document.getElementById('add-btn');
+        const backBtn = document.getElementById('back-btn');
+        
+        // Form Elements
+        const custForm = document.getElementById('customer-form');
+        const custName = document.getElementById('cust-name');
+        const custPhone = document.getElementById('cust-phone');
+
+        // Toast Element
+        const toast = document.getElementById('toast');
+
+        // --- Toast Logic ---
+        let toastTimeout;
+        function showToast(message, type = 'success') {
+            // Clear previous timeout to prevent flickering
+            clearTimeout(toastTimeout);
+            
+            toast.textContent = message;
+            toast.className = 'toast'; // reset classes
+            if (type === 'error') {
+                toast.classList.add('error');
+            }
+            
+            // Trigger animation
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+
+            // Auto-hide after 2.5 seconds
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2500);
+        }
+
+        // --- 1. List Rendering ---
+        function renderCustomers(data) {
+            listContainer.innerHTML = '';
+            data.forEach(customer => {
+                const li = document.createElement('li');
+                const initial = customer.name.charAt(0);
+                li.innerHTML = `
+                    <div class="card" onclick="alert('Clicked customer: ${customer.name}')">
+                        <div class="avatar">${initial}</div>
+                        <div class="details">
+                            <div class="name">${customer.name}</div>
+                            <div class="contact-info"><i class="fas fa-phone-alt"></i> ${customer.phone}</div>
+                            <div class="contact-info"><i class="fas fa-envelope"></i> ${customer.email || 'N/A'}</div>
+                        </div>
+                        <div class="menu" onclick="event.stopPropagation(); alert('Menu for ${customer.name}')">
+                            <i class="fas fa-ellipsis-v"></i>
+                        </div>
+                    </div>
+                `;
+                listContainer.appendChild(li);
+            });
+            updateCount(data);
+        }
+
+        function updateCount(data) {
+            const total = data.length;
+            searchInput.placeholder = `Search ${total} customers...`;
+            countDisplay.textContent = `${total} customers`;
+        }
+
+        // Search Filter
+        searchInput.addEventListener('input', (e) => {
+            const term = e.target.value.toLowerCase();
+            const filtered = customers.filter(c => 
+                c.name.toLowerCase().includes(term) ||
+                c.phone.toLowerCase().includes(term) ||
+                (c.email && c.email.toLowerCase().includes(term))
+            );
+            renderCustomers(filtered);
+        });
+
+        // Initial render
+        renderCustomers(customers);
+
+        // --- 2. Page Navigation ---
+        function showForm() {
+            listPage.classList.remove('active');
+            formPage.classList.add('active');
+            custForm.reset(); // Clear form when opening
+        }
+
+        function showList() {
+            formPage.classList.remove('active');
+            listPage.classList.add('active');
+        }
+
+        addBtn.addEventListener('click', showForm);
+        backBtn.addEventListener('click', showList);
+
+        // --- 3. Form Submission (Save, Toast, & Navigate) ---
+        custForm.addEventListener('submit', function(e) {
+            e.preventDefault(); 
+
+            const name = custName.value.trim();
+            const phone = custPhone.value.trim();
+            const address = document.getElementById('cust-address').value.trim();
+
+            // Validation 1: Name mandatory
+            if (!name) {
+                showToast("Error: Customer Name is mandatory.", 'error');
+                custName.focus();
+                return;
+            }
+
+            // Validation 2: Mobile mandatory
+            if (!phone) {
+                showToast("Error: Mobile Number is mandatory.", 'error');
+                custPhone.focus();
+                return;
+            }
+
+            // Validation 3: 10 digit phone
+            if (!/^[0-9]{10}$/.test(phone)) {
+                showToast("Error: Mobile Number must be exactly 10 digits.", 'error');
+                custPhone.focus();
+                return;
+            }
+
+            // --- 1. Save Data to Main Page ---
+            const newCustomer = { 
+                name, 
+                phone, 
+                email: 'N/A', 
+                address 
+            };
+            customers.push(newCustomer);
+            
+            // Re-render the main list immediately
+            renderCustomers(customers);
+
+            // --- 2. Show Toast Message ---
+            showToast('Customer saved successfully!');
+
+            // --- 3. Page back to main page ---
+            setTimeout(() => {
+                showList();
+            }, 1000); // 1 second delay to let the user read the toast before switching
+        });
+    </script>
+</body>
+</html>
