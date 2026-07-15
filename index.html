@@ -34,20 +34,8 @@
             filter: blur(80px);
             opacity: 0.5;
         }
-        body::before {
-            width: 300px;
-            height: 300px;
-            background: #a7f3d0;
-            top: -50px;
-            left: -50px;
-        }
-        body::after {
-            width: 400px;
-            height: 400px;
-            background: #fbbf24;
-            bottom: -100px;
-            right: -100px;
-        }
+        body::before { width: 300px; height: 300px; background: #a7f3d0; top: -50px; left: -50px; }
+        body::after { width: 400px; height: 400px; background: #fbbf24; bottom: -100px; right: -100px; }
 
         /* --- Toast Notification --- */
         .toast {
@@ -55,16 +43,15 @@
             top: 30px;
             left: 50%;
             transform: translateX(-50%) translateY(-30px);
-            background: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             padding: 14px 28px;
             border-radius: 16px;
             border: 1px solid rgba(255, 255, 255, 0.6);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
             font-weight: 600;
             font-size: 15px;
-            color: #14532d; /* Dark Green */
+            color: #14532d;
             opacity: 0;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             z-index: 1000;
@@ -72,265 +59,192 @@
             text-align: center;
             min-width: 200px;
         }
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0px);
-            pointer-events: auto;
-        }
-        .toast.error {
-            color: #991b1b; /* Dark Red */
-            border-color: #fca5a5;
-        }
+        .toast.show { opacity: 1; transform: translateX(-50%) translateY(0px); pointer-events: auto; }
+        .toast.error { color: #991b1b; border-color: #fca5a5; }
 
         /* --- Page Navigation --- */
-        .page {
-            display: none;
-            width: 100%;
-            max-width: 450px;
-            margin: 0 auto;
-            animation: fadeIn 0.3s ease-in-out;
-        }
-        .page.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        .page { display: none; width: 100%; max-width: 450px; margin: 0 auto; animation: fadeIn 0.3s ease-in-out; }
+        .page.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- Shared Header --- */
         .app-header {
-            display: flex;
-            align-items: center;
-            padding: 10px 0 20px 0;
-            color: #0f172a;
+            display: flex; align-items: center; padding: 10px 0 20px 0; color: #0f172a;
         }
-
-        .app-header i.fa-arrow-left {
-            font-size: 20px;
-            margin-right: 20px;
-            cursor: pointer;
-            padding: 8px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            transition: 0.2s;
+        .app-header i.fa-arrow-left, .app-header i.fa-pen {
+            font-size: 18px; cursor: pointer; padding: 8px; background: rgba(255,255,255,0.3); border-radius: 50%; transition: 0.2s;
         }
-
-        .app-header i.fa-arrow-left:hover {
-            background: rgba(255,255,255,0.6);
-        }
-
-        .app-header h1 {
-            font-size: 20px;
-            font-weight: 600;
-        }
+        .app-header i.fa-arrow-left:hover, .app-header i.fa-pen:hover { background: rgba(255,255,255,0.6); }
+        .app-header i.fa-arrow-left { margin-right: 20px; }
+        .app-header i.fa-pen { margin-left: auto; }
+        .app-header h1 { font-size: 20px; font-weight: 600; flex: 1; }
 
         /* ==================== LIST PAGE ==================== */
-        .search-action-container {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
-
+        .search-action-container { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
         .search-wrapper {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(12px);
-            border-radius: 16px;
-            padding: 0 16px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            flex: 1; display: flex; align-items: center; background: rgba(255, 255, 255, 0.35);
+            backdrop-filter: blur(12px); border-radius: 16px; padding: 0 16px; border: 1px solid rgba(255, 255, 255, 0.4);
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
         }
-
-        .search-wrapper i {
-            color: #475569;
-            margin-right: 12px;
-        }
-
-        .search-wrapper input {
-            width: 100%;
-            padding: 14px 0;
-            border: none;
-            background: transparent;
-            font-size: 15px;
-            outline: none;
-            color: #1e293b;
-        }
-
+        .search-wrapper i { color: #475569; margin-right: 12px; }
+        .search-wrapper input { width: 100%; padding: 14px 0; border: none; background: transparent; font-size: 15px; outline: none; color: #1e293b; }
         .search-wrapper input::placeholder { color: #64748b; }
-
         .add-btn {
-            width: 52px;
-            height: 52px;
-            border-radius: 16px;
-            background: #f97316;
-            border: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3);
-            transition: all 0.2s ease;
+            width: 52px; height: 52px; border-radius: 16px; background: #f97316; border: none;
+            display: flex; align-items: center; justify-content: center; color: white; font-size: 24px; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(249, 115, 22, 0.3); transition: all 0.2s ease;
         }
         .add-btn:hover { transform: scale(1.05); background: #ea580c; }
-
-        .customer-count {
-            font-size: 13px;
-            color: #475569;
-            margin-left: 4px;
-            margin-bottom: 12px;
-            font-weight: 500;
-        }
-
-        #customer-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-        }
+        .customer-count { font-size: 13px; color: #475569; margin-left: 4px; margin-bottom: 12px; font-weight: 500; }
+        #customer-list { list-style: none; display: flex; flex-direction: column; gap: 12px; }
 
         .card {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(12px);
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
-            padding: 16px;
-            display: flex;
-            align-items: center;
-            transition: all 0.2s ease;
-            cursor: pointer;
+            background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(12px);
+            border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04); padding: 16px;
+            display: flex; align-items: center; transition: all 0.2s ease; cursor: pointer;
         }
-
-        .card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
-            background: rgba(255, 255, 255, 0.45);
-        }
-
+        .card:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08); background: rgba(255, 255, 255, 0.45); }
         .card:active { transform: scale(0.98); }
 
         .avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 18px;
-            color: #166534;
-            flex-shrink: 0;
-            margin-right: 16px;
+            width: 50px; height: 50px; border-radius: 50%; background: rgba(255, 255, 255, 0.5);
+            display: flex; align-items: center; justify-content: center; font-weight: 600;
+            font-size: 18px; color: #166534; flex-shrink: 0; margin-right: 16px;
         }
-
         .details { flex: 1; display: flex; flex-direction: column; gap: 4px; }
         .details .name { font-weight: 600; font-size: 16px; color: #1e293b; }
         .details .contact-info { display: flex; align-items: center; gap: 8px; font-size: 13px; color: #475569; }
         .details .contact-info i { width: 14px; font-size: 13px; color: #64748b; }
-        .menu { color: #64748b; font-size: 20px; padding: 4px 8px; cursor: pointer; }
 
-        /* ==================== FORM PAGE ==================== */
-        .form-wrapper {
-            background: rgba(255, 255, 255, 0.30);
-            backdrop-filter: blur(12px);
-            border-radius: 24px;
-            padding: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            margin-top: 10px;
+        .card-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; margin-left: auto; }
+        .dues-amount { color: #dc2626; font-weight: 700; font-size: 14px; background: rgba(220, 38, 38, 0.1); padding: 4px 10px; border-radius: 12px; white-space: nowrap; }
+        .menu { color: #64748b; font-size: 18px; cursor: pointer; }
+
+        /* ==================== DETAILS PAGE ==================== */
+        .profile-card {
+            background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(12px);
+            border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 30px 20px; display: flex; flex-direction: column; align-items: center;
+            margin-bottom: 16px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
         }
-
-        .profile-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            margin: 0 auto 20px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #166534;
-            font-size: 32px;
+        .profile-card .avatar-large {
+            width: 80px; height: 80px; border-radius: 50%; background: rgba(255, 255, 255, 0.8);
+            display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 32px; color: #166534; margin-bottom: 12px;
         }
+        .profile-card .name-large { font-size: 22px; font-weight: 700; color: #1e293b; margin-bottom: 12px; }
+        .profile-card .info-row { display: flex; align-items: center; gap: 10px; color: #334155; font-size: 14px; width: 100%; margin-bottom: 6px; padding-left: 10px; }
+        .profile-card .info-row i { width: 20px; color: #64748b; text-align: center; }
 
-        .form-group { margin-bottom: 18px; }
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 24px; }
+        .stat-card {
+            background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(12px);
+            border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 16px; display: flex; flex-direction: column; align-items: center; text-align: center;
+        }
+        .stat-card .stat-icon { font-size: 24px; margin-bottom: 8px; }
+        .stat-card .stat-number { font-size: 18px; font-weight: 700; color: #1e293b; }
+        .stat-card .stat-label { font-size: 11px; color: #64748b; margin-top: 4px; }
+        .stat-card .icon-blue { color: #2563eb; }
+        .stat-card .icon-green { color: #16a34a; }
+        .stat-card .icon-orange { color: #ea580c; }
+
+        .history-section { margin-bottom: 24px; }
+        .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; color: #1e293b; }
+        .history-header h3 { font-size: 17px; font-weight: 600; }
+        .history-header span { font-size: 12px; color: #64748b; background: rgba(255,255,255,0.2); padding: 4px 10px; border-radius: 20px; }
+
+        .history-list { display: flex; flex-direction: column; gap: 10px; }
+        .history-item {
+            background: rgba(255, 255, 255, 0.35); backdrop-filter: blur(12px);
+            border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.4);
+            padding: 16px; display: flex; align-items: center; gap: 14px;
+        }
+        .history-item .status-icon {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(22, 163, 74, 0.2); display: flex; align-items: center; justify-content: center;
+            color: #16a34a; flex-shrink: 0;
+        }
+        .history-item .status-icon.transaction { background: rgba(37, 99, 235, 0.2); color: #2563eb; }
+        .history-item .content { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+        .history-item .content .title { font-weight: 600; font-size: 15px; color: #1e293b; }
+        .history-item .content .subtitle { font-size: 13px; color: #64748b; }
+        .history-item .right-side { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
+        .history-item .right-side .amount { font-weight: 700; font-size: 15px; color: #1e293b; }
+        .history-item .right-side .badge { background: rgba(22, 163, 74, 0.15); color: #16a34a; padding: 2px 10px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+        .history-item .right-side .badge.pending { background: rgba(234, 88, 12, 0.15); color: #ea580c; }
+
+        /* ==================== EDIT MODAL ==================== */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.3); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+            align-items: center; justify-content: center; z-index: 999; padding: 20px;
+        }
+        .modal-overlay.active { display: flex; }
         
-        .form-group label {
-            display: block;
-            font-size: 14px;
-            font-weight: 600;
-            color: #14532d;
-            margin-bottom: 6px;
+        .modal-content {
+            background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border-radius: 24px; padding: 24px; width: 100%; max-width: 450px;
+            border: 1px solid rgba(255, 255, 255, 0.6); box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            animation: scaleIn 0.3s ease;
         }
+        @keyframes scaleIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        .input-wrapper {
-            display: flex;
-            align-items: center;
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255, 255, 255, 0.6);
-            border-radius: 12px;
-            padding: 12px 16px;
-            transition: 0.2s;
-        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; color: #0f172a; }
+        .modal-header h2 { font-size: 18px; font-weight: 700; }
+        .modal-close { font-size: 22px; cursor: pointer; color: #64748b; transition: 0.2s; }
+        .modal-close:hover { color: #dc2626; }
 
-        .input-wrapper:focus-within {
-            background: rgba(255, 255, 255, 0.7);
-            border-color: #22c55e;
-            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2);
+        .modal-form-group { margin-bottom: 16px; }
+        .modal-form-group label { display: block; font-size: 13px; font-weight: 600; color: #14532d; margin-bottom: 6px; }
+        .modal-input-wrapper {
+            display: flex; align-items: center; background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 12px; padding: 10px 14px; transition: 0.2s;
         }
+        .modal-input-wrapper:focus-within { background: rgba(255, 255, 255, 0.9); border-color: #22c55e; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2); }
+        .modal-input-wrapper i { color: #166534; margin-right: 12px; width: 18px; text-align: center; }
+        .modal-input-wrapper input { width: 100%; border: none; background: transparent; outline: none; font-size: 15px; color: #1e293b; }
 
-        .input-wrapper i {
-            color: #166534;
-            font-size: 18px;
-            margin-right: 14px;
-            width: 20px;
-            text-align: center;
-        }
-
-        .input-wrapper input, .input-wrapper textarea {
-            width: 100%;
-            border: none;
-            background: transparent;
-            outline: none;
-            font-size: 15px;
-            color: #1e293b;
-        }
-
-        .input-wrapper textarea {
-            resize: vertical;
-            min-height: 80px;
-            font-family: inherit;
-        }
-
-        .submit-btn {
-            width: 100%;
-            padding: 14px;
-            border: none;
-            border-radius: 12px;
-            background: linear-gradient(to right, #16a34a, #22c55e);
-            color: white;
-            font-size: 16px;
-            font-weight: 600;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            margin-top: 10px;
-            box-shadow: 0 4px 14px rgba(34, 197, 94, 0.3);
-            transition: 0.2s;
-        }
+        /* Transaction Section in Modal */
+        .modal-trans-section { margin-top: 20px; margin-bottom: 16px; border-top: 1px solid rgba(255,255,255,0.5); padding-top: 16px; }
+        .modal-trans-section h4 { font-size: 15px; font-weight: 600; color: #0f172a; margin-bottom: 12px; }
+        #modal-trans-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
         
-        .submit-btn:hover { transform: scale(1.02); }
-        .submit-btn:active { transform: scale(0.98); }
+        .trans-row {
+            display: flex; align-items: center; background: rgba(255, 255, 255, 0.5); border-radius: 10px; padding: 8px 12px; gap: 10px;
+        }
+        /* Static transactions (Non-editable) */
+        .trans-row .trans-desc { flex: 1; font-size: 14px; color: #1e293b; font-weight: 500; }
+        .trans-row .trans-amount { font-size: 14px; font-weight: 600; color: #1e293b; width: 60px; text-align: right; }
+        .trans-row .trans-status { font-size: 10px; font-weight: 600; background: rgba(234, 88, 12, 0.2); color: #ea580c; padding: 2px 8px; border-radius: 10px; }
+        .trans-row .trans-status.cleared { background: rgba(22, 163, 74, 0.2); color: #16a34a; }
+        .btn-minus { background: #ef4444; color: white; border: none; border-radius: 50%; width: 28px; height: 28px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; flex-shrink: 0; }
+        .btn-minus:hover { transform: scale(1.1); background: #dc2626; }
+
+        /* NEW: "Payment Received" Add Section */
+        .modal-add-payment {
+            display: flex; gap: 10px; align-items: center; background: rgba(255, 255, 255, 0.3); 
+            border-radius: 12px; padding: 10px 12px; border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .modal-add-payment label { font-size: 14px; font-weight: 600; color: #166534; white-space: nowrap; }
+        .payment-input-wrapper {
+            display: flex; flex: 1; align-items: center; background: rgba(255, 255, 255, 0.6);
+            border-radius: 8px; padding: 4px 10px; border: 1px solid rgba(255, 255, 255, 0.8);
+        }
+        .payment-input-wrapper:focus-within { background: white; border-color: #22c55e; box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.3); }
+        .payment-input-wrapper i { color: #166534; margin-right: 6px; }
+        .payment-input-wrapper input {
+            width: 100%; border: none; background: transparent; outline: none;
+            font-size: 14px; padding: 6px 0; color: #1e293b;
+        }
+        .btn-plus { background: #22c55e; color: white; border: none; border-radius: 50%; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 18px; transition: 0.2s; flex-shrink: 0; }
+        .btn-plus:hover { transform: scale(1.1); background: #16a34a; }
+
+        .modal-actions { display: flex; gap: 12px; margin-top: 20px; }
+        .btn-cancel { flex: 1; padding: 12px; border: 1px solid rgba(255,255,255,0.6); background: rgba(255,255,255,0.3); border-radius: 12px; font-size: 15px; font-weight: 600; color: #475569; cursor: pointer; transition: 0.2s; }
+        .btn-cancel:hover { background: rgba(255,255,255,0.5); }
+        .btn-save { flex: 2; padding: 12px; border: none; background: linear-gradient(to right, #16a34a, #22c55e); border-radius: 12px; font-size: 15px; font-weight: 600; color: white; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 12px rgba(34,197,94,0.3); }
+        .btn-save:hover { transform: scale(1.02); }
 
         @media (max-width: 480px) { body { padding: 12px; } }
     </style>
@@ -346,7 +260,6 @@
             <i class="fas fa-arrow-left" style="visibility: hidden;"></i>
             <h1>Customers</h1>
         </header>
-
         <div class="search-action-container">
             <div class="search-wrapper">
                 <i class="fas fa-search"></i>
@@ -356,133 +269,227 @@
                 <i class="fas fa-plus"></i>
             </button>
         </div>
-
         <div class="customer-count" id="customer-count">0 customers</div>
         <ul id="customer-list"></ul>
     </div>
 
-    <!-- ==================== PAGE 2: ADD/EDIT CUSTOMER ==================== -->
-    <div id="form-page" class="page">
+    <!-- ==================== PAGE 2: CUSTOMER DETAILS ==================== -->
+    <div id="details-page" class="page">
         <header class="app-header">
-            <i class="fas fa-arrow-left" id="back-btn"></i>
-            <h1>Add/Edit Customer</h1>
+            <i class="fas fa-arrow-left" id="details-back-btn"></i>
+            <h1>Customer Details</h1>
+            <i class="fas fa-pen" id="details-edit-btn"></i>
         </header>
 
-        <div class="form-wrapper">
-            <div class="profile-avatar">
-                <i class="fas fa-user"></i>
+        <!-- Profile Card -->
+        <div class="profile-card" id="details-profile">
+            <div class="avatar-large" id="details-initial">D</div>
+            <div class="name-large" id="details-name">David Lee</div>
+            <div class="info-row"><i class="fas fa-phone-alt"></i> <span id="details-phone">DEMO-555-0105</span></div>
+            <div class="info-row"><i class="fas fa-calendar-alt"></i> <span id="details-since">Member since 09/07/2026</span></div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon icon-blue"><i class="fas fa-shopping-bag"></i></div>
+                <div class="stat-number" id="stat-orders">1</div>
+                <div class="stat-label">Total Orders</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon icon-orange"><i class="fas fa-hourglass-half"></i></div>
+                <div class="stat-number" id="stat-pending">₹0.00</div>
+                <div class="stat-label">Pending Receivables</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon icon-green"><i class="fas fa-rupee-sign"></i></div>
+                <div class="stat-number" id="stat-spent">₹0.00</div>
+                <div class="stat-label">Total Spent</div>
+            </div>
+        </div>
+
+        <!-- Order History -->
+        <div class="history-section">
+            <div class="history-header">
+                <h3>Order History</h3>
+                <span id="order-count-label">0 Orders</span>
+            </div>
+            <div class="history-list" id="order-history-list"></div>
+        </div>
+
+        <!-- Transaction History -->
+        <div class="history-section">
+            <div class="history-header">
+                <h3>Transaction History</h3>
+                <span id="transaction-count-label">0 Transactions</span>
+            </div>
+            <div class="history-list" id="transaction-history-list"></div>
+        </div>
+    </div>
+
+    <!-- ==================== MODAL: EDIT CUSTOMER ==================== -->
+    <div id="edit-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Edit Customer</h2>
+                <i class="fas fa-times modal-close" id="modal-close-btn"></i>
+            </div>
+            
+            <div class="modal-form-group">
+                <label>Customer Name</label>
+                <div class="modal-input-wrapper">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="modal-cust-name" placeholder="Enter customer name">
+                </div>
             </div>
 
-            <form id="customer-form" novalidate>
-                <!-- Name Field (Mandatory) -->
-                <div class="form-group">
-                    <label>Customer Name</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-user"></i>
-                        <input type="text" id="cust-name" placeholder="Enter customer name" required>
-                    </div>
+            <div class="modal-form-group">
+                <label>Phone Number</label>
+                <div class="modal-input-wrapper">
+                    <i class="fas fa-phone-alt"></i>
+                    <input type="tel" id="modal-cust-phone" placeholder="10 digit mobile number" maxlength="10">
                 </div>
+            </div>
 
-                <!-- Phone Field (Mandatory, 10 Digits) -->
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-phone-alt"></i>
-                        <input type="tel" id="cust-phone" placeholder="Enter 10 digit mobile number" 
-                               required pattern="[0-9]{10}" maxlength="10" inputmode="numeric">
+            <!-- Edit Transaction History -->
+            <div class="modal-trans-section">
+                <h4>Transaction History</h4>
+                <div id="modal-trans-list"></div>
+                
+                <!-- New: Specific "Payment Received" area -->
+                <div class="modal-add-payment">
+                    <label><i class="fas fa-arrow-right"></i> Payment Received</label>
+                    <div class="payment-input-wrapper">
+                        <i class="fas fa-rupee-sign"></i>
+                        <input type="number" id="payment-amount-input" placeholder="0.00" step="0.01" min="0">
                     </div>
+                    <button class="btn-plus" id="add-payment-btn"><i class="fas fa-plus"></i></button>
                 </div>
+            </div>
 
-                <!-- Address Field (Optional) -->
-                <div class="form-group">
-                    <label>Address (Optional)</label>
-                    <div class="input-wrapper">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <textarea id="cust-address" placeholder="Enter customer address"></textarea>
-                    </div>
-                </div>
-
-                <button type="submit" class="submit-btn">
-                    <i class="fas fa-check"></i> Update
-                </button>
-            </form>
+            <div class="modal-actions">
+                <button class="btn-cancel" id="modal-cancel-btn">Cancel</button>
+                <button class="btn-save" id="modal-save-btn"><i class="fas fa-check"></i> Save Changes</button>
+            </div>
         </div>
     </div>
 
     <script>
-        // --- Data & DOM Elements ---
+        // --- Data ---
         let customers = [
-            { name: 'David Lee', phone: 'DEMO-555-0105', email: 'david@example.com', address: '' },
-            { name: 'Emily Brown', phone: 'DEMO-555-0104', email: 'emily@example.com', address: '' },
-            { name: 'John Smith', phone: 'DEMO-555-0101', email: 'john@example.com', address: '' },
-            { name: 'Lisa Chen', phone: 'DEMO-555-0106', email: 'lisa@example.com', address: '' },
-            { name: 'Mike Wilson', phone: 'DEMO-555-0103', email: 'mike@example.com', address: '' },
-            { name: 'Sarah Johnson', phone: 'DEMO-555-0102', email: 'sarah@example.com', address: '' },
-            { name: 'Tom Clark', phone: 'DEMO-555-0107', email: 'tom@example.com', address: '' },
-            { name: 'Anna Taylor', phone: 'DEMO-555-0108', email: 'anna@example.com', address: '' }
+            { 
+                name: 'David Lee', phone: 'DEMO-555-0105', email: 'david@example.com', address: '',
+                memberSince: '09/07/2026', orderCount: 1, totalSpent: 75.00, pendingAmount: 30.00,
+                orders: [{id: 'ORD-20260711-0001', date: '11/07/2026', amount: 75.00, status: 'Completed'}],
+                transactions: [{desc: 'Payment Received', date: '11/07/2026', amount: 75.00, status: 'Cleared'}]
+            },
+            { 
+                name: 'Emily Brown', phone: 'DEMO-555-0104', email: 'emily@example.com', address: '',
+                memberSince: '15/05/2026', orderCount: 3, totalSpent: 320.50, pendingAmount: 120.00,
+                orders: [{id: 'ORD-20260701-0023', date: '01/07/2026', amount: 120.00, status: 'Completed'},
+                        {id: 'ORD-20260615-0089', date: '15/06/2026', amount: 200.50, status: 'Completed'}],
+                transactions: [{desc: 'Payment Received', date: '01/07/2026', amount: 120.00, status: 'Cleared'},
+                              {desc: 'Payment Received', date: '15/06/2026', amount: 200.50, status: 'Cleared'}]
+            },
+            { name: 'John Smith', phone: 'DEMO-555-0101', email: 'john@example.com', address: '',
+              memberSince: '01/01/2026', orderCount: 0, totalSpent: 0.00, pendingAmount: 0.00, orders: [], transactions: [] },
+            { name: 'Lisa Chen', phone: 'DEMO-555-0106', email: 'lisa@example.com', address: '',
+              memberSince: '10/03/2026', orderCount: 2, totalSpent: 450.00, pendingAmount: 450.00, orders: [], transactions: [] },
+            { name: 'Mike Wilson', phone: 'DEMO-555-0103', email: 'mike@example.com', address: '',
+              memberSince: '22/02/2026', orderCount: 5, totalSpent: 1120.00, pendingAmount: 0.00, orders: [], transactions: [] },
+            { name: 'Sarah Johnson', phone: 'DEMO-555-0102', email: 'sarah@example.com', address: '',
+              memberSince: '05/04/2026', orderCount: 1, totalSpent: 85.00, pendingAmount: 85.00, orders: [], transactions: [] },
+            { name: 'Tom Clark', phone: 'DEMO-555-0107', email: 'tom@example.com', address: '',
+              memberSince: '28/06/2026', orderCount: 0, totalSpent: 0.00, pendingAmount: 0.00, orders: [], transactions: [] },
+            { name: 'Anna Taylor', phone: 'DEMO-555-0108', email: 'anna@example.com', address: '',
+              memberSince: '14/12/2025', orderCount: 4, totalSpent: 560.00, pendingAmount: 50.00, orders: [], transactions: [] }
         ];
 
+        // --- DOM Elements ---
         const listContainer = document.getElementById('customer-list');
         const searchInput = document.getElementById('search-input');
         const countDisplay = document.getElementById('customer-count');
         
         // Page Elements
         const listPage = document.getElementById('list-page');
-        const formPage = document.getElementById('form-page');
+        const detailsPage = document.getElementById('details-page');
         const addBtn = document.getElementById('add-btn');
-        const backBtn = document.getElementById('back-btn');
-        
-        // Form Elements
-        const custForm = document.getElementById('customer-form');
-        const custName = document.getElementById('cust-name');
-        const custPhone = document.getElementById('cust-phone');
+        const detailsBackBtn = document.getElementById('details-back-btn');
+        const detailsEditBtn = document.getElementById('details-edit-btn');
 
-        // Toast Element
+        // Modal Elements
+        const editModal = document.getElementById('edit-modal');
+        const modalCloseBtn = document.getElementById('modal-close-btn');
+        const modalCancelBtn = document.getElementById('modal-cancel-btn');
+        const modalSaveBtn = document.getElementById('modal-save-btn');
+        const modalName = document.getElementById('modal-cust-name');
+        const modalPhone = document.getElementById('modal-cust-phone');
+        const modalTransList = document.getElementById('modal-trans-list');
+        
+        // New Payment Received Input
+        const paymentAmountInput = document.getElementById('payment-amount-input');
+        const addPaymentBtn = document.getElementById('add-payment-btn');
+
+        // Details Elements
+        const dInitial = document.getElementById('details-initial');
+        const dName = document.getElementById('details-name');
+        const dPhone = document.getElementById('details-phone');
+        const dSince = document.getElementById('details-since');
+        const statOrders = document.getElementById('stat-orders');
+        const statPending = document.getElementById('stat-pending');
+        const statSpent = document.getElementById('stat-spent');
+        const orderList = document.getElementById('order-history-list');
+        const transList = document.getElementById('transaction-history-list');
+        const orderCountLabel = document.getElementById('order-count-label');
+        const transCountLabel = document.getElementById('transaction-count-label');
+
         const toast = document.getElementById('toast');
+
+        // State
+        let editingIndex = -1;
+        let modalTempTransactions = []; 
 
         // --- Toast Logic ---
         let toastTimeout;
         function showToast(message, type = 'success') {
-            // Clear previous timeout to prevent flickering
             clearTimeout(toastTimeout);
-            
             toast.textContent = message;
-            toast.className = 'toast'; // reset classes
-            if (type === 'error') {
-                toast.classList.add('error');
-            }
-            
-            // Trigger animation
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 10);
-
-            // Auto-hide after 2.5 seconds
-            toastTimeout = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2500);
+            toast.className = 'toast'; 
+            if (type === 'error') toast.classList.add('error');
+            setTimeout(() => toast.classList.add('show'), 10);
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 2500);
         }
 
         // --- 1. List Rendering ---
         function renderCustomers(data) {
             listContainer.innerHTML = '';
-            data.forEach(customer => {
+            data.forEach((customer, index) => {
                 const li = document.createElement('li');
                 const initial = customer.name.charAt(0);
+                const pending = customer.pendingAmount || 0;
+
                 li.innerHTML = `
-                    <div class="card" onclick="alert('Clicked customer: ${customer.name}')">
+                    <div class="card" data-index="${index}">
                         <div class="avatar">${initial}</div>
                         <div class="details">
                             <div class="name">${customer.name}</div>
                             <div class="contact-info"><i class="fas fa-phone-alt"></i> ${customer.phone}</div>
-                            <div class="contact-info"><i class="fas fa-envelope"></i> ${customer.email || 'N/A'}</div>
                         </div>
-                        <div class="menu" onclick="event.stopPropagation(); alert('Menu for ${customer.name}')">
-                            <i class="fas fa-ellipsis-v"></i>
+                        <div class="card-right">
+                            ${pending > 0 ? `<div class="dues-amount">₹${pending.toFixed(2)}</div>` : ''}
+                            <div class="menu" onclick="event.stopPropagation(); alert('Menu for ${customer.name}')">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </div>
                         </div>
                     </div>
                 `;
                 listContainer.appendChild(li);
+                li.querySelector('.card').addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    editingIndex = index; 
+                    const cust = customers[index];
+                    showCustomerDetails(cust);
+                });
             });
             updateCount(data);
         }
@@ -493,83 +500,192 @@
             countDisplay.textContent = `${total} customers`;
         }
 
-        // Search Filter
         searchInput.addEventListener('input', (e) => {
             const term = e.target.value.toLowerCase();
             const filtered = customers.filter(c => 
-                c.name.toLowerCase().includes(term) ||
-                c.phone.toLowerCase().includes(term) ||
-                (c.email && c.email.toLowerCase().includes(term))
+                c.name.toLowerCase().includes(term) || c.phone.toLowerCase().includes(term)
             );
             renderCustomers(filtered);
         });
-
-        // Initial render
         renderCustomers(customers);
 
-        // --- 2. Page Navigation ---
-        function showForm() {
+        // --- 2. Customer Details Page ---
+        function showCustomerDetails(customer) {
             listPage.classList.remove('active');
-            formPage.classList.add('active');
-            custForm.reset(); // Clear form when opening
+            detailsPage.classList.add('active');
+
+            dInitial.textContent = customer.name.charAt(0);
+            dName.textContent = customer.name;
+            dPhone.textContent = customer.phone;
+            dSince.textContent = `Member since ${customer.memberSince}`;
+
+            statOrders.textContent = customer.orderCount;
+            statPending.textContent = `₹${customer.pendingAmount.toFixed(2)}`;
+            statSpent.textContent = `₹${customer.totalSpent.toFixed(2)}`;
+
+            const orders = customer.orders || [];
+            orderList.innerHTML = '';
+            orderCountLabel.textContent = `${orders.length} Order${orders.length !== 1 ? 's' : ''}`;
+            if(orders.length === 0) {
+                orderList.innerHTML = `<div style="text-align:center;color:#64748b;padding:16px;font-size:14px;">No orders found.</div>`;
+            } else {
+                orders.forEach(order => {
+                    const el = document.createElement('div'); el.className = 'history-item';
+                    el.innerHTML = `
+                        <div class="status-icon"><i class="fas fa-check"></i></div>
+                        <div class="content"><div class="title">${order.id}</div><div class="subtitle">${order.date}</div></div>
+                        <div class="right-side"><div class="amount">₹${order.amount.toFixed(2)}</div><div class="badge">${order.status}</div></div>
+                    `;
+                    orderList.appendChild(el);
+                });
+            }
+
+            const transactions = customer.transactions || [];
+            transList.innerHTML = '';
+            transCountLabel.textContent = `${transactions.length} Transaction${transactions.length !== 1 ? 's' : ''}`;
+            if(transactions.length === 0) {
+                transList.innerHTML = `<div style="text-align:center;color:#64748b;padding:16px;font-size:14px;">No transactions available.</div>`;
+            } else {
+                transactions.forEach(trans => {
+                    const el = document.createElement('div'); el.className = 'history-item';
+                    const isPending = trans.status === 'Pending' || !trans.status;
+                    el.innerHTML = `
+                        <div class="status-icon transaction"><i class="fas fa-${isPending ? 'clock' : 'check-circle'}"></i></div>
+                        <div class="content"><div class="title">${trans.desc}</div><div class="subtitle">${trans.date}</div></div>
+                        <div class="right-side"><div class="amount">₹${trans.amount.toFixed(2)}</div><div class="badge ${isPending ? 'pending' : ''}">${trans.status}</div></div>
+                    `;
+                    transList.appendChild(el);
+                });
+            }
         }
 
-        function showList() {
-            formPage.classList.remove('active');
+        // --- 3. Page Navigation ---
+        function goToList() {
+            detailsPage.classList.remove('active');
             listPage.classList.add('active');
         }
-
-        addBtn.addEventListener('click', showForm);
-        backBtn.addEventListener('click', showList);
-
-        // --- 3. Form Submission (Save, Toast, & Navigate) ---
-        custForm.addEventListener('submit', function(e) {
-            e.preventDefault(); 
-
-            const name = custName.value.trim();
-            const phone = custPhone.value.trim();
-            const address = document.getElementById('cust-address').value.trim();
-
-            // Validation 1: Name mandatory
-            if (!name) {
-                showToast("Error: Customer Name is mandatory.", 'error');
-                custName.focus();
-                return;
-            }
-
-            // Validation 2: Mobile mandatory
-            if (!phone) {
-                showToast("Error: Mobile Number is mandatory.", 'error');
-                custPhone.focus();
-                return;
-            }
-
-            // Validation 3: 10 digit phone
-            if (!/^[0-9]{10}$/.test(phone)) {
-                showToast("Error: Mobile Number must be exactly 10 digits.", 'error');
-                custPhone.focus();
-                return;
-            }
-
-            // --- 1. Save Data to Main Page ---
-            const newCustomer = { 
-                name, 
-                phone, 
-                email: 'N/A', 
-                address 
-            };
-            customers.push(newCustomer);
-            
-            // Re-render the main list immediately
+        addBtn.addEventListener('click', function() {
+            editingIndex = -1;
+            const newCust = { name: 'New Customer', phone: '0000000000', email: 'N/A', address: '',
+              memberSince: new Date().toLocaleDateString(), orderCount: 0, totalSpent: 0.00, pendingAmount: 0.00, orders: [], transactions: [] };
+            customers.push(newCust);
+            editingIndex = customers.length - 1;
             renderCustomers(customers);
+            showCustomerDetails(customers[editingIndex]);
+            showToast("New customer added. Click edit to fill details.");
+        });
+        
+        detailsBackBtn.addEventListener('click', goToList);
 
-            // --- 2. Show Toast Message ---
-            showToast('Customer saved successfully!');
+        // --- 4. Modal Logic (Static Transactions & Add Payment Received) ---
+        function openEditModal() {
+            if (editingIndex === -1) return;
+            const cust = customers[editingIndex];
+            
+            modalName.value = cust.name;
+            modalPhone.value = cust.phone;
+            
+            // Copy transactions to temporary array
+            modalTempTransactions = JSON.parse(JSON.stringify(cust.transactions || []));
+            renderModalTransactions();
+            
+            editModal.classList.add('active');
+        }
 
-            // --- 3. Page back to main page ---
-            setTimeout(() => {
-                showList();
-            }, 1000); // 1 second delay to let the user read the toast before switching
+        function closeEditModal() {
+            editModal.classList.remove('active');
+            paymentAmountInput.value = '';
+        }
+
+        // Render transactions inside the Modal as STATIC TEXT (Cannot be edited)
+        function renderModalTransactions() {
+            modalTransList.innerHTML = '';
+            if (modalTempTransactions.length === 0) {
+                modalTransList.innerHTML = `<div style="text-align:center;color:#64748b;font-size:13px;padding:10px;">No transactions added yet.</div>`;
+            } else {
+                modalTempTransactions.forEach((trans, idx) => {
+                    const row = document.createElement('div');
+                    row.className = 'trans-row';
+                    const isPending = trans.status === 'Pending';
+                    
+                    // Use plain text divs, NOT inputs!
+                    row.innerHTML = `
+                        <div class="trans-desc">${trans.desc}</div>
+                        <div class="trans-amount">₹${trans.amount.toFixed(2)}</div>
+                        <div class="trans-status ${!isPending ? 'cleared' : ''}">${trans.status}</div>
+                        <button class="btn-minus" data-index="${idx}"><i class="fas fa-minus"></i></button>
+                    `;
+                    modalTransList.appendChild(row);
+                });
+
+                // Attach listeners for Delete buttons
+                modalTransList.querySelectorAll('.btn-minus').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.index);
+                        modalTempTransactions.splice(idx, 1);
+                        renderModalTransactions();
+                    });
+                });
+            }
+        }
+
+        // Add "Payment Received" transaction inside Modal (+ button)
+        addPaymentBtn.addEventListener('click', function() {
+            const amount = parseFloat(paymentAmountInput.value.trim());
+            if (isNaN(amount) || amount <= 0) { 
+                showToast("Please enter a valid positive amount.", 'error'); 
+                paymentAmountInput.focus();
+                return; 
+            }
+            
+            // Auto-create the exact card requested
+            const newTrans = {
+                desc: 'Payment received',
+                amount: amount,
+                date: new Date().toLocaleDateString(),
+                status: 'Cleared'
+            };
+            modalTempTransactions.push(newTrans);
+            renderModalTransactions();
+            paymentAmountInput.value = '';
+        });
+
+        // Edit Button opens Modal
+        detailsEditBtn.addEventListener('click', openEditModal);
+        modalCloseBtn.addEventListener('click', closeEditModal);
+        modalCancelBtn.addEventListener('click', closeEditModal);
+
+        // --- 5. Modal Save (Update Data & Re-render) ---
+        modalSaveBtn.addEventListener('click', function() {
+            const name = modalName.value.trim();
+            const phone = modalPhone.value.trim();
+
+            if (!name) { showToast("Customer Name is mandatory.", 'error'); modalName.focus(); return; }
+            if (!phone) { showToast("Mobile Number is mandatory.", 'error'); modalPhone.focus(); return; }
+            if (!/^[0-9]{10}$/.test(phone)) { showToast("Mobile must be exactly 10 digits.", 'error'); modalPhone.focus(); return; }
+
+            // Update the actual customer data
+            const cust = customers[editingIndex];
+            cust.name = name;
+            cust.phone = phone;
+            cust.transactions = modalTempTransactions; // New card is already appended here
+
+            // Recalculate Stats (Pending Amount based on pending transactions)
+            let totalPending = 0;
+            cust.transactions.forEach(t => {
+                if (t.status === 'Pending') totalPending += t.amount;
+            });
+            cust.pendingAmount = totalPending;
+
+            closeEditModal();
+            renderCustomers(customers); // Update list
+            showCustomerDetails(cust);  // Update details page immediately
+            showToast('Customer details updated successfully!');
+        });
+
+        // Keyboard support for Add Payment
+        paymentAmountInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') addPaymentBtn.click();
         });
     </script>
 </body>
